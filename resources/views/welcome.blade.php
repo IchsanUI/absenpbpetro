@@ -42,12 +42,12 @@
 </head>
 
 <body class="dark-mode">
-    <div class="container-from" style="width:100%; padding: 40px">
+    <div class="container-from" style="width:100%; padding: 20px">
 
 
         <div style="display: flex;justify-content: center;flex-direction: column;align-items: center">
             <div class="mb-3">
-                <h1>ABSEN <span style="color: yellow">PB.PETROKIMIA</span></h1>
+                <h1>ABSEN PB.PETROKIMIA</h1>
             </div>
 
             <div class="mb-3" style="display: flex;gap: 10px">
@@ -57,12 +57,12 @@
                 </button>
                 <div class="card border-secondary" style="width: 16rem;">
                     <div class="card-header" id="dateHeader">Tanggal Hari ini
-                        <h5 id="dateDisplay"></h5>
+                        <h6 id="dateDisplay"></h6>
                     </div>
                 </div>
 
             </div>
-            <div style="display: flex;gap: 10px;text-align: center">
+            <div style="display: flex;gap: 10px;text-align: center ;width:100%;">
                 <div class="card text-dark bg-light mb-3" style="max-width: 8rem;">
                     <div class="card-header">Jumlah</div>
                     <div class="card-body">
@@ -86,43 +86,47 @@
                 </div>
             </div>
 
-
-            <div class="card">
-                <div class="card-body">
-                    <table id="dataTable" style="text-align: center " class="display">
-                        <thead>
-                            <tr>
-                                <th>Nama</th>
-                                <th>Panggilan</th>
-                                <th>Banyak Absen</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Kamila</td>
-                                <td>Kamilatok</td>
-                                <td><span class="badge rounded-pill text-bg-warning"
-                                        style="width: 40px;font-size: 15px">2</span></td>
-                                <td><button class="btn"
-                                        style="background-color: rgb(49, 50, 71);color: white">Absen</button></td>
-                            </tr>
-                            <tr>
-                                <td>Ayunda</td>
-                                <td>Ayunda</td>
-                                <td><span class="badge rounded-pill text-bg-warning"
-                                        style="width: 40px;font-size: 15px">0</span></td>
-                                <td><button class="btn"
-                                        style="background-color: rgb(49, 50, 71);color: white">Absen</button></td>
-                            </tr>
-                            <!-- Tambahkan baris-baris lainnya sesuai kebutuhan -->
-                        </tbody>
-                    </table>
+            <div class="table">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="dataTable" style="text-align: center " class="display">
+                            <thead>
+                                <tr>
+                                    <th>Nama</th>
+                                    <th>Panggilan</th>
+                                    <th>Absen</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kamila</td>
+                                    <td>Kamilatok</td>
+                                    <td><span class="badge rounded-pill text-bg-warning"
+                                            style="width: 40px;font-size: 15px">2</span></td>
+                                    <td><button class="btn"
+                                            style="background-color: rgb(49, 50, 71);color: white;width: 60px;font-size: 7pt">Absen</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Ayunda</td>
+                                    <td>Ayunda</td>
+                                    <td><span class="badge rounded-pill text-bg-warning"
+                                            style="width: 40px;font-size: 15px">0</span></td>
+                                    <td><button class="btn"
+                                            style="background-color: rgb(49, 50, 71);color: white;width: 60px;font-size: 7pt">Absen</button>
+                                    </td>
+                                </tr>
+                                <!-- Tambahkan baris-baris lainnya sesuai kebutuhan -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-
+        <footer>
+            <p>Build by Ichsan</p>
+        </footer>
         <script>
             const darkModeButton = document.getElementById('dark-mode-button');
             const darkModeIcon = document.getElementById('dark-mode-icon');
