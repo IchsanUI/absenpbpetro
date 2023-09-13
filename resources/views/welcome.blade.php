@@ -40,7 +40,7 @@
         }
     </style>
 </head>
-@vite([])
+{{-- @vite([]) --}}
 
 <body class="dark-mode">
     <div class="container-from" style="width:100%; padding: 40px">
