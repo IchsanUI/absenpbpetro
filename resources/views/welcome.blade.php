@@ -2,201 +2,418 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-
-    <!-- Tambahkan link ke Google Fonts untuk Rubik -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik:400,500&display=swap">
-    <!-- Tambahkan referensi ke jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Tambahkan referensi ke DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
-    <!-- Tambahkan referensi ke DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
+    <title>Laravel 9 Server Side Datatables Tutorial</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-    <style>
-        /* Gaya untuk dark mode */
-        body.dark-mode {
-            background-color: rgb(35, 35, 51);
-            /* Warna latar belakang mode gelap */
-            color: #fff;
-            /* Warna teks mode gelap */
-        }
-
-        /* Gaya untuk font Rubik */
-        body {
-            font-family: 'Rubik', sans-serif;
-            font-size: 9pt;
-        }
-
-        .card-title {
-            font-size: 40pt;
-        }
-
-        .container-from {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            color: rgb(35, 35, 51);
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-{{-- @vite([]) --}}
+<style>
+    /* Gaya untuk dark mode */
+    body.dark-mode {
+        background-color: rgb(35, 35, 51);
+        /* color: #fff; */
+    }
+
+    body {
+        font-family: 'Rubik', sans-serif;
+        font-size: 9pt;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .Layout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+    }
+
+
+    .topHead {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        gap: 10px;
+    }
+
+    .topHead button {
+
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .viewCount {
+        display: flex;
+        gap: 10px;
+        text-align: center;
+        margin-bottom: 10px
+    }
+</style>
 
 <body class="dark-mode">
-    <div class="container-from" style="width:100%; padding: 20px">
-        <div>
-            <div class="mb-3">
-                <h1>ABSEN PB.PETROKIMIA</h1>
-            </div>
+    <div class="Layout">
 
-
-            <div class="mb-3" style="display: flex;gap: 10px">
-                <button type="button" class="btn btn-secondary" id="dark-mode-button">
-                    <span id="dark-mode-text">Mode Gelap</span>
-                    <i id="dark-mode-icon" class="fi fi-sr-moon-stars"></i>
-                </button>
-                <div class="card border-secondary" style="width: 16rem;">
-                    <div class="card-header" id="dateHeader">Tanggal Hari ini
-                        <h6 id="dateDisplay"></h6>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex;gap: 10px;text-align: center ;width:100%;">
-                <div class="card text-dark bg-light mb-3" style="max-width: 8rem;">
-                    <div class="card-header">Jumlah</div>
-                    <div class="card-body">
-                        <h1 class="card-title">0</h1>
-                        <p class="card-text">Total Atlit yang Anak"</p>
-                    </div>
-                </div>
-                <div class="card text-white mb-3" style="max-width: 8rem; background-color: rgb(49, 50, 71)">
-                    <div class="card-header">Jumlah</div>
-                    <div class="card-body">
-                        <h1 class="card-title">0</h1>
-                        <p class="card-text">Total Atlit yang Hadir Saat Ini.</p>
-                    </div>
-                </div>
-                <div class="card text-dark bg-light mb-3" style="max-width: 8rem;">
-                    <div class="card-header">Jumlah</div>
-                    <div class="card-body">
-                        <h1 class="card-title">0</h1>
-                        <p class="card-text">Total Atlit yang Dewasa.</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                @livewire('tambah-atlit-p-b')
-                <div>
-                    @livewire('data-atlits-p-b-table')
-                </div>
-            </div>
-
-
-            @livewireScripts
-            <!-- Tambah Atlit Modal -->
-
+        <div class="Head_Title">
+            <h2 style="color: white; text-align: center">ABSEN PB.PETROKIMIA</h2>
+            <p style="color: white; text-align: center">Lakukan Absensi Dengan Bijak.</p>
         </div>
-        <footer>
-            <p><i>Develop by </i> <b> Ichsan</b> </p>
-        </footer>
+        <div class="topHead">
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tambahModal">Tambah
+                Data</button>
+            <button type="button" class="btn " id="dark-mode-button"
+                style="background-color: rgb(63, 64, 91);color:white">
+                <span id="dark-mode-text">Terang </span>
+                <i id="dark-mode-icon" class="fi fi-sr-moon-stars" style="margin-left: 0.4rem"></i>
+            </button>
+            <button type="button" class="btn btn-warning"><b id="dateDisplay"></b></button>
+        </div>
+        <div class="viewCount">
+            <div class="card text-dark bg-light ">
+                <div class="card-header">Jumlah</div>
+                <div class="card-body">
+                    <h1 class="card-title">0</h1>
+                    <p class="card-text">Total Atlit yang Anak".</p>
+                </div>
+            </div>
+            <div class="card" style="background-color: rgb(42,43,63);color:white">
+                <div class="card-header">Jumlah</div>
+                <div class="card-body">
+                    <h1 class="card-title" style="font-size: 40pt" id="jumlah-absensi">0</h1>
+                    <p class="card-text">Total Atlit yang Hadir Saat Ini.</p>
+                </div>
+            </div>
+            <div class="card text-dark bg-light ">
+                <div class="card-header">Jumlah</div>
+                <div class="card-body">
+                    <h1 class="card-title">0</h1>
+                    <p class="card-text">Total Atlit yang Dewasa.</p>
+                </div>
+            </div>
+        </div>
+        <div class="Down">
+            <div class="card">
+                <div class="card-body">
+                    <table id="product-table" class="table display user_datatable">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Nama Panggilan</th>
+                                <th>Absen</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-        </script>
-        <script>
-            document.addEventListener('livewire:load', function() {
-                Livewire.on('close-modal', function() {
-                    $('#myModal').modal('hide');
-                });
-                Livewire.on('dataDitambahkan', function() {
-                    // Reload data Livewire secara otomatis
-                    window.livewire.emit('refreshComponent'); // Sesuaikan nama komponen Livewire Anda
+    </div>
+
+
+    <div class="modal fade" id="tambahModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Atlit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="tambahForm">
+                    @csrf
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="nama">Nama:</label>
+                            <input type="text" class="form-control" id="Nama" name="Nama" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_panggilan">Nama Panggilan:</label>
+                            <input type="text" class="form-control" id="namaPanggilan" name="namaPanggilan" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer" style="display: flex;justify-content: space-between">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-primary " id="buttonSubmit">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p style="color: white;"><i>Develop by </i> <a href="https://www.instagram.com/m.o.s.a.n"
+                style="color: yellow">@m.o.s.a.n</a> </p>
+    </footer>
+
+    <script type="text/javascript">
+        $(function() {
+            var table = $('.user_datatable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('users.index') }}",
+                paging: true,
+                columns: [{
+                        data: 'Nama',
+                        name: 'Nama',
+                        width: '5px',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'namaPanggilan',
+                        name: 'namaPanggilan',
+                        width: '40%',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'banyakAbsen',
+                        name: 'banyakAbsen',
+                        width: '10%',
+                        className: 'text-center'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false,
+                    },
+                ]
+            });
+            $('#tambahForm').submit(function(e) {
+                e.preventDefault();
+                $("#buttonSubmit").text("Mengirim...")
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('saveData.atlit') }}", // Gantilah dengan URL yang sesuai
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        // console.log(response);
+                        $('#tambahModal').modal('hide');
+                        $('#tambahForm')[0].reset();
+
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Data berhasil disimpan',
+                            icon: 'success',
+                            timer: 1000, // Waktu dalam milidetik (2000 ms = 2 detik)
+                            showConfirmButton: false // Menyembunyikan tombol "Ok"
+                        });
+                        // Setelah 2 detik, tabel akan diperbarui
+                        setTimeout(function() {
+                            table.ajax.reload();
+                        }, 1000);
+
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                        // Tampilkan pesan kesalahan kepada pengguna, misalnya:
+                        alert('Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+                    }
                 });
             });
-        </script>
+            $(document).on('click', '.absen-button', function() {
+                // Ambil nama dari atribut data-nama
+                var nama = $(this).data('nama');
+                var id_user = $(this).data('id_user');
+                $.ajax({
+                    url: "{{ route('absen') }}",
+                    type: 'POST',
+                    data: {
+                        _token: $('meta[name="csrf-token"]').attr(
+                            'content'), // Menambahkan token CSRF
+                        nama: nama,
+                        id_user: id_user
+                    },
+                    success: function(response) {
+                        console.log('Absen berhasil');
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: nama + ' Berhasil Absen!',
+                            icon: 'success',
+                            timer: 1000, // Durasi SweetAlert dalam milidetik (misalnya, 2000 ms = 2 detik)
+                            showConfirmButton: false // Menyembunyikan tombol "Ok"
+                        });
+                        setTimeout(function() {
+                            table.ajax.reload();
+                            updateJumlahAbsensi();
+                        }, 1000);
 
-        <script>
-            $(document).ready(function() {
-                $('#dataTable').DataTable();
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+
             });
-        </script>
+            $(document).on('click', '.batal-absen-button', function() {
+                var nama = $(this).data('nama');
+                var id_user = $(this).data('id_user');
 
-        <script>
-            const darkModeButton = document.getElementById('dark-mode-button');
-            const darkModeIcon = document.getElementById('dark-mode-icon');
-            const darkModeText = document.getElementById('dark-mode-text');
-            const body = document.body;
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Anda yakin ingin membatalkan absensi ' + nama + '?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Tidak',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Kirim permintaan AJAX untuk membatalkan absensi
+                        $.ajax({
+                            url: "{{ route('batalAbsen') }}", // Gantilah dengan URL endpoint yang sesuai
+                            type: 'POST',
+                            data: {
+                                _token: $('meta[name="csrf-token"]').attr('content'),
+                                nama: nama,
+                                id_user: id_user
+                            },
+                            success: function(response) {
+                                console.log('Absen dibatalkan');
+                                Swal.fire({
+                                    title: 'Sukses!',
+                                    text: 'Absensi ' + nama + ' dibatalkan!',
+                                    icon: 'success',
+                                    timer: 1000,
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    table.ajax.reload();
+                                    updateJumlahAbsensi();
+                                }, 1000);
+                            },
+                            error: function(error) {
+                                console.error('Error:', error);
+                            }
+                        });
+                    }
+                });
+            });
 
-            // Fungsi untuk mengaktifkan/menonaktifkan mode gelap
-            function toggleDarkMode() {
-                body.classList.toggle('dark-mode'); // Menggunakan toggle untuk mengaktifkan/menonaktifkan mode gelap
-                if (body.classList.contains('dark-mode')) {
-                    darkModeIcon.classList.remove('fi-sr-brightness');
-                    darkModeIcon.classList.add('fi-sr-moon-stars'); // Mengganti ikon ke matahari saat mode gelap aktif
-                    darkModeText.textContent = 'Mode Terang'; // Mengganti teks tombol saat mode gelap aktif
-                } else {
-                    darkModeIcon.classList.remove('fi-sr-moon-stars');
-                    darkModeIcon.classList.add('fi-sr-brightness'); // Mengganti ikon ke lampu saat mode gelap nonaktif
-                    darkModeText.textContent = 'Mode Gelap'; // Mengganti teks tombol saat mode gelap nonaktif
+            function updateJumlahAbsensi() {
+                // Mengambil jumlah data absensi menggunakan AJAX
+                $.ajax({
+                    url: "{{ route('jumlahAbsensi') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        // Menampilkan jumlah data absensi dalam elemen dengan id "jumlah-absensi"
+                        $('#jumlah-absensi').text(response.jumlahAbsensi);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Mengambil jumlah data absensi menggunakan AJAX
+            $.ajax({
+                url: "{{ route('jumlahAbsensi') }}",
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Menampilkan jumlah data absensi dalam elemen dengan id "jumlah-absensi"
+                    $('#jumlah-absensi').text(response.jumlahAbsensi);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
                 }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Menampilkan modal saat tombol dengan ID 'showModalButton' diklik
+            $('#showModalButton').click(function() {
+                $('#tambahModal').modal('show');
+            });
+        });
+    </script>
+
+    {{-- Dark Mode Script --}}
+    <script>
+        const darkModeButton = document.getElementById('dark-mode-button');
+        const darkModeIcon = document.getElementById('dark-mode-icon');
+        const darkModeText = document.getElementById('dark-mode-text');
+        const body = document.body;
+
+        // Fungsi untuk mengaktifkan/menonaktifkan mode gelap
+        function toggleDarkMode() {
+            body.classList.toggle('dark-mode'); // Menggunakan toggle untuk mengaktifkan/menonaktifkan mode gelap
+            if (body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.remove('fi-sr-brightness');
+                darkModeIcon.classList.add('fi-sr-moon-stars'); // Mengganti ikon ke matahari saat mode gelap aktif
+                darkModeText.textContent = 'Terang'; // Mengganti teks tombol saat mode gelap aktif
+            } else {
+                darkModeIcon.classList.remove('fi-sr-moon-stars');
+                darkModeIcon.classList.add('fi-sr-brightness'); // Mengganti ikon ke lampu saat mode gelap nonaktif
+                darkModeText.textContent = 'Gelap'; // Mengganti teks tombol saat mode gelap nonaktif
             }
+        }
 
-            // Panggil fungsi toggleDarkMode saat tombol ditekan
-            darkModeButton.addEventListener('click', toggleDarkMode);
-        </script>
-        <script>
-            // Mendapatkan elemen yang akan menampilkan tanggal dan waktu
-            const dateDisplay = document.getElementById('dateDisplay');
-            const dateHeader = document.getElementById('dateHeader');
+        // Panggil fungsi toggleDarkMode saat tombol ditekan
+        darkModeButton.addEventListener('click', toggleDarkMode);
+    </script>
+    {{-- Hari Dan waktu --}}
+    <script>
+        // Mendapatkan elemen yang akan menampilkan tanggal dan waktu
+        const dateDisplay = document.getElementById('dateDisplay');
 
-            // Fungsi untuk mengupdate tanggal dan waktu setiap detik
-            function updateDateTime() {
-                const now = new Date();
+        // Fungsi untuk mengupdate tanggal dan waktu setiap detik
+        function updateDateTime() {
+            const now = new Date();
 
-                // Format tanggal
-                const optionsDate = {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric'
-                };
-                const formattedDate = now.toLocaleDateString('id-ID', optionsDate);
+            // Format tanggal
+            const optionsDate = {
+                year: 'numeric',
+                month: 'numeric',
+                day: 'numeric'
+            };
+            const formattedDate = now.toLocaleDateString('id-ID', optionsDate);
 
-                // Format waktu
-                const optionsTime = {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                };
-                const formattedTime = now.toLocaleTimeString('id-ID', optionsTime);
+            // Format waktu
+            const optionsTime = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const formattedTime = now.toLocaleTimeString('id-ID', optionsTime);
 
-                // Menampilkan tanggal dan waktu dalam elemen "dateDisplay"
-                dateDisplay.textContent = `${formattedDate} | ${formattedTime}`;
-            }
+            // Menampilkan tanggal dan waktu dalam elemen "dateDisplay"
+            dateDisplay.textContent = `${formattedDate} | ${formattedTime}`;
+        }
 
-            // Memanggil fungsi updateDateTime() setiap detik
-            setInterval(updateDateTime, 1000);
+        // Memanggil fungsi updateDateTime() setiap detik
+        setInterval(updateDateTime, 1000);
 
-            // Menginisialisasi tampilan awal
-            updateDateTime();
-        </script>
+        // Menginisialisasi tampilan awal
+        updateDateTime();
+    </script>
 </body>
-
 
 </html>
