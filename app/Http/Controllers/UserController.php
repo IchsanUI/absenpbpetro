@@ -30,7 +30,7 @@ class UserController extends Controller
 
                     // Jika sudah absen, tampilkan tombol "Batal Absen"
                     if ($hasAbsenToday) {
-                        return '<a href="javascript:void(0)" class="btn btn-danger btn-sm batal-absen-button" data-id_user="' . $row->id . '" data-nama="' . $row->namaPanggilan . '"><small>Batal Absen</small></a>';
+                        return '<a href="javascript:void(0)" class="btn btn-danger btn-sm batal-absen-button" data-id_user="' . $row->id . '" data-nama="' . $row->namaPanggilan . '"><small>Batal</small></a>';
                     }
 
                     // Jika belum absen, tampilkan tombol "Absen"
