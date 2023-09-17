@@ -79,18 +79,21 @@
 <body class="dark-mode">
     <div class="Layout">
         <div class="Head_Title">
-            <h2 style="color: white; text-align: center">ABSEN PB.PETROKIMIA</h2>
+            <h2 style="color: white; text-align: center">ABSEN <i class="fi fi-sr-shuttlecock"
+                    style="font-size: 15pt;margin-left: 0.4rem;margin-right: 0.4rem"></i> PB.PETROKIMIA </h2>
             <p style="color: white; text-align: center">Lakukan Absensi Dengan Bijak.</p>
         </div>
         <div class="topHead">
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tambahModal">Tambah
-                Data</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tambahModal"> Tambah
+                Data <i class="fi fi-sr-user-add" style="margin-left: 0.4rem"></i></button>
+            <button type="button" class="btn btn-info">Export
+                Data <i class="fi fi-sr-file-export" style="margin-left: 0.4rem"></i></button>
             <button type="button" class="btn " id="dark-mode-button"
                 style="background-color: rgb(63, 64, 91);color:white">
                 <span id="dark-mode-text">Terang </span>
                 <i id="dark-mode-icon" class="fi fi-sr-moon-stars" style="margin-left: 0.4rem"></i>
             </button>
-            <button type="button" class="btn btn-warning"><b id="dateDisplay"></b></button>
+
         </div>
         <div class="viewCount">
             <div class="card text-dark bg-light ">
@@ -103,7 +106,7 @@
             <div class="card" style="background-color: rgb(42,43,63);color:white">
                 <div class="card-header">Jumlah</div>
                 <div class="card-body">
-                    <h1 class="card-title" style="font-size: 40pt" id="jumlah-absensi">0</h1>
+                    <h1 class="card-title" style="font-size: 30pt" id="jumlah-absensi">0</h1>
                     <p class="card-text">Total Atlit yang Hadir Saat Ini.</p>
                 </div>
             </div>
@@ -115,6 +118,12 @@
                 </div>
             </div>
         </div>
+        <div class="dateSetting" style="display: flex; gap: 10px">
+            <button type="button" class="btn btn-warning mb-2"><i class="fi fi-sr-settings"></i></button>
+            <button type="button" class="btn btn-warning mb-2"> <i id="dark-mode-icon" class="fi fi-sr-calendar-clock"
+                    style="margin-right: 0.4rem"></i> Hari Ini : <b id="dateDisplay"></b></button>
+        </div>
+
         <div class="Down">
             <div class="card">
                 <div class="card-body">
@@ -148,14 +157,20 @@
                 <form id="tambahForm">
                     @csrf
                     <div class="modal-body">
-
+                        <div class="alert alert-warning" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            Tolong Isi dengan benar karena developer belum menambahkan fitur <b>"Menghapus Data"</b>.
+                        </div>
                         <div class="form-group">
                             <label for="nama">Nama:</label>
                             <input type="text" class="form-control" id="Nama" name="Nama" required>
                         </div>
                         <div class="form-group">
                             <label for="nama_panggilan">Nama Panggilan:</label>
-                            <input type="text" class="form-control" id="namaPanggilan" name="namaPanggilan" required>
+                            <input type="text" class="form-control" id="namaPanggilan" name="namaPanggilan"
+                                required>
                         </div>
 
                     </div>
@@ -164,6 +179,7 @@
                         <button type="submit" class="btn btn-primary " id="buttonSubmit">Simpan</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -179,7 +195,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('users.index') }}",
-                paging: true,
+                paging: false,
                 columns: [{
                         data: 'Nama',
                         name: 'Nama',
@@ -398,7 +414,7 @@
             // Format tanggal
             const optionsDate = {
                 year: 'numeric',
-                month: 'numeric',
+                month: 'long',
                 day: 'numeric'
             };
             const formattedDate = now.toLocaleDateString('id-ID', optionsDate);
@@ -412,7 +428,7 @@
             const formattedTime = now.toLocaleTimeString('id-ID', optionsTime);
 
             // Menampilkan tanggal dan waktu dalam elemen "dateDisplay"
-            dateDisplay.textContent = `${formattedDate} | ${formattedTime}`;
+            dateDisplay.textContent = `${formattedDate} [ ${formattedTime} ]`;
         }
 
         // Memanggil fungsi updateDateTime() setiap detik

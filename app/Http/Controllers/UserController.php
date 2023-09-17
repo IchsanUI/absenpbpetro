@@ -34,7 +34,7 @@ class UserController extends Controller
                     }
 
                     // Jika belum absen, tampilkan tombol "Absen"
-                    return '<a href="javascript:void(0)" class="btn btn-warning btn-sm absen-button" data-id_user="' . $row->id . '" data-nama="' . $row->namaPanggilan . '"><small>Absen</small></a>';
+                    return '<a href="javascript:void(0)" class="btn btn-warning btn-sm absen-button" data-id_user="' . $row->id . '" data-nama="' . $row->namaPanggilan . '"><small>Absen</small></a> ';
                 })
                 ->rawColumns(['action'])
                 ->make(true);
