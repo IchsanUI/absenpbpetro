@@ -31,10 +31,6 @@
     body {
         font-family: 'Rubik', sans-serif;
         font-size: 9pt;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
     }
 
     .Layout {
@@ -42,7 +38,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 30px;
+        width: 100%;
+        padding: 20px;
     }
 
 
@@ -56,7 +53,6 @@
     }
 
     .topHead button {
-
         width: 100%;
         display: flex;
         justify-content: center;
@@ -69,11 +65,15 @@
         text-align: center;
         margin-bottom: 10px
     }
+
+    .Down {
+        display: flex;
+
+    }
 </style>
 
 <body class="dark-mode">
     <div class="Layout">
-
         <div class="Head_Title">
             <h2 style="color: white; text-align: center">ABSEN PB.PETROKIMIA</h2>
             <p style="color: white; text-align: center">Lakukan Absensi Dengan Bijak.</p>
@@ -86,7 +86,7 @@
                 <span id="dark-mode-text">Terang </span>
                 <i id="dark-mode-icon" class="fi fi-sr-moon-stars" style="margin-left: 0.4rem"></i>
             </button>
-            <button type="button" class="btn btn-warning"><b id="dateDisplay"></b></button>
+
         </div>
         <div class="viewCount">
             <div class="card text-dark bg-light ">
@@ -111,6 +111,7 @@
                 </div>
             </div>
         </div>
+        <button type="button" class="btn btn-warning mb-2"><b id="dateDisplay"></b></button>
         <div class="Down">
             <div class="card">
                 <div class="card-body">
@@ -127,7 +128,10 @@
                 </div>
             </div>
         </div>
-
+        <footer>
+            <p style="color: white;"><i>Develop by </i> <a href="https://www.instagram.com/m.o.s.a.n"
+                    style="color: yellow">@m.o.s.a.n</a> </p>
+        </footer>
     </div>
 
 
@@ -151,7 +155,8 @@
                         </div>
                         <div class="form-group">
                             <label for="nama_panggilan">Nama Panggilan:</label>
-                            <input type="text" class="form-control" id="namaPanggilan" name="namaPanggilan" required>
+                            <input type="text" class="form-control" id="namaPanggilan" name="namaPanggilan"
+                                required>
                         </div>
 
                     </div>
@@ -164,10 +169,7 @@
         </div>
     </div>
 
-    <footer>
-        <p style="color: white;"><i>Develop by </i> <a href="https://www.instagram.com/m.o.s.a.n"
-                style="color: yellow">@m.o.s.a.n</a> </p>
-    </footer>
+
 
     <script type="text/javascript">
         $(function() {
