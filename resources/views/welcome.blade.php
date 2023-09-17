@@ -30,7 +30,7 @@
 
     body.dark-mode {
         background-color: rgb(35, 35, 51);
-        /* color: #fff; */
+        color: white;
     }
 
 
@@ -41,7 +41,9 @@
         flex-direction: column;
         padding-left: 30px;
         padding-right: 30px;
-        margin-top: 30px
+        margin-top: 30px;
+        color: black;
+
     }
 
     .Layout {
@@ -78,10 +80,10 @@
 
 <body class="dark-mode">
     <div class="Layout">
-        <div class="Head_Title">
-            <h2 style="color: white; text-align: center">ABSEN <i class="fi fi-sr-shuttlecock"
+        <div class="Head_Title" style="text-align: center">
+            <h2>ABSEN <i class="fi fi-sr-shuttlecock"
                     style="font-size: 15pt;margin-left: 0.4rem;margin-right: 0.4rem"></i> PB.PETROKIMIA </h2>
-            <p style="color: white; text-align: center">Lakukan Absensi Dengan Bijak.</p>
+            <p>Lakukan Absensi Dengan Bijak.</p>
         </div>
         <div class="topHead">
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#tambahModal"> Tambah
@@ -127,7 +129,8 @@
         <div class="Down">
             <div class="card">
                 <div class="card-body">
-                    <table id="product-table" class="table display user_datatable">
+                    <table id="product-table" class="table display user_datatable"
+                        style="color: rgb(6, 6, 6); text-align: center">
                         <thead>
                             <tr>
                                 <th>Nama</th>
@@ -185,8 +188,7 @@
     </div>
 
     <footer class="mt-4">
-        <p style="color: white;"><i>Develop by </i> <a href="https://www.instagram.com/m.o.s.a.n"
-                style="color: yellow">@m.o.s.a.n</a> </p>
+        <p><i>Develop by </i> <a href="https://www.instagram.com/m.o.s.a.n" style="color: yellow">@m.o.s.a.n</a> </p>
     </footer>
 
     <script type="text/javascript">
